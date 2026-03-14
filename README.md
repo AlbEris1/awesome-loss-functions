@@ -1,13 +1,38 @@
 # Awesome Loss Functions [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-A comprehensive, chronologically ordered collection of loss functions across all subdomains of deep learning and machine learning — with paper links, one-line descriptions, and implementation references.
+[![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Contributions](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://github.com/stabgan/awesome-loss-functions/issues)
 
-**200+ loss functions. 15 categories. Every subdomain of AI.**
+A comprehensive, chronologically ordered collection of loss functions across all subdomains of deep learning and machine learning — with paper links, one-line descriptions, mathematical formulations, and implementation references.
+
+**350+ loss functions. 25+ categories. Every subdomain of AI.**
+
+> If this resource helps your research or engineering work, please consider giving it a ⭐
+
+---
+
+## What's New
+
+- 🔊 **Audio, Music & Speech Generation** — WaveNet to Stable Audio, 19 losses
+- 🎬 **Video Generation & Understanding** — VGAN to VideoPoet, 20 losses
+- ⏳ **Time Series Forecasting** — Pinball Loss to TimesFM, 23 losses
+- 🧠 **Continual & Lifelong Learning** — EWC to EASE, 18 methods
+- ⚖️ **Calibration, Fairness & Bias Mitigation** — Brier Score to Group DRO, 18 losses
+- 🛡️ **Adversarial Robustness & OOD Detection** — FGSM-AT to CIDER, 22 losses
+- 🔍 **Anomaly Detection & Multi-Modal Learning** — Deep SVDD to ImageBind, 17 losses
+- 🖼️ **Image-to-Image Translation** — Total Variation to DoveNet, 16 losses
+- 📐 **Semi-Supervised Learning** — Pseudo-Label to SoftMatch, 12 losses
+- 🎯 **Optical Flow, Video & Pose** — Horn-Schunck to SEA-RAFT, 33 losses
 
 ---
 
 ## Table of Contents
 
+**Core Categories (inline)**
+
+- [Loss Selection Guide](#-loss-selection-guide)
+- [Key Mathematical Formulations](#-key-mathematical-formulations)
 - [Classification](#classification)
 - [Regression](#regression)
 - [Segmentation](#segmentation)
@@ -33,9 +58,97 @@ A comprehensive, chronologically ordered collection of loss functions across all
 - [Multi-Task Learning](#multi-task-learning)
 - [Uncertainty Estimation](#uncertainty-estimation)
 - [Domain Adaptation](#domain-adaptation)
+
+**Extended Categories (separate files)**
+
+- [Audio, Music & Speech Generation](sections/audio-music-speech.md) — 19 losses
+- [Video Generation & Understanding](sections/video-generation-understanding.md) — 20 losses
+- [Time Series Forecasting](sections/time-series-forecasting.md) — 23 losses
+- [Continual & Lifelong Learning](sections/continual-lifelong-learning.md) — 18 methods
+- [Calibration, Fairness & Bias Mitigation](sections/calibration-fairness.md) — 18 losses
+- [Adversarial Robustness & OOD Detection](sections/adversarial-robustness-ood.md) — 22 losses
+- [Anomaly Detection & Multi-Modal Learning](sections/anomaly-detection-and-multimodal.md) — 17 losses
+- [Image-to-Image Translation & Style Transfer](sections/image-to-image-translation.md) — 16 losses
+- [Semi-Supervised Learning & Self-Training](sections/semi-supervised-learning.md) — 12 losses
+- [Optical Flow, Video Prediction & Pose Estimation](sections/temporal-motion.md) — 33 losses
+
+**Resources**
+
 - [Survey Papers](#survey-papers)
 - [Key Implementation Libraries](#key-implementation-libraries)
 - [Contributing](#contributing)
+
+---
+
+## 🧭 Loss Selection Guide
+
+Not sure which loss to use? Here's a quick decision framework:
+
+| Task | Default Choice | Class Imbalance | Noisy Labels | Need Calibration |
+|------|---------------|-----------------|--------------|------------------|
+| Binary Classification | BCE | Focal Loss | SCE / GCE | Focal + Temp. Scaling |
+| Multi-class Classification | Cross-Entropy | Class-Balanced CE | Label Smoothing | Label Smoothing |
+| Semantic Segmentation | CE + Dice | Focal Tversky | — | — |
+| Object Detection (box) | Smooth L1 + Focal | Focal Loss | — | — |
+| Object Detection (IoU) | CIoU / GIoU | — | — | — |
+| Image Generation (GAN) | Hinge / Non-Saturating | — | — | — |
+| Image Generation (Diffusion) | DDPM (ε-prediction) | — | — | — |
+| Super-Resolution | L1 + Perceptual + GAN | — | — | — |
+| Self-Supervised (vision) | InfoNCE / DINO | — | — | — |
+| Face Recognition | ArcFace / AdaFace | Sub-center ArcFace | ElasticFace | — |
+| Language Modeling | Cross-Entropy (NTP) | — | — | — |
+| LLM Alignment | DPO / SimPO | — | — | — |
+| Speech Recognition | CTC / RNN-T | — | — | — |
+| RL (value-based) | DQN / Double DQN | — | — | — |
+| RL (policy-based) | PPO | — | — | — |
+| Regression | MSE / Huber | — | Huber | NLL w/ variance |
+| Metric Learning | Triplet / Proxy Anchor | — | — | — |
+| Medical Segmentation | Dice + Boundary | Tversky / Focal Tversky | — | — |
+| 3D Reconstruction | Chamfer + Normal | — | — | — |
+| Depth Estimation | Scale-Invariant | — | — | — |
+| Time Series | MSE / Quantile | — | Huber | CRPS |
+| Continual Learning | EWC / DER++ | — | — | — |
+| Fairness | Group DRO | — | — | — |
+
+---
+
+## 📐 Key Mathematical Formulations
+
+**Cross-Entropy Loss**
+$$\mathcal{L}_{CE} = -\sum_{c=1}^{C} y_c \log(\hat{y}_c)$$
+
+**Binary Cross-Entropy**
+$$\mathcal{L}_{BCE} = -[y \log(\hat{y}) + (1-y) \log(1-\hat{y})]$$
+
+**Focal Loss**
+$$\mathcal{L}_{FL} = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
+
+**Dice Loss**
+$$\mathcal{L}_{Dice} = 1 - \frac{2 \sum_i p_i g_i}{\sum_i p_i + \sum_i g_i}$$
+
+**Triplet Loss**
+$$\mathcal{L}_{Triplet} = \max(0, \|f_a - f_p\|_2 - \|f_a - f_n\|_2 + \alpha)$$
+
+**InfoNCE / Contrastive Loss**
+$$\mathcal{L}_{InfoNCE} = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_{k=1}^{2N} \mathbb{1}_{[k \neq i]} \exp(\text{sim}(z_i, z_k) / \tau)}$$
+
+**KL Divergence**
+$$D_{KL}(P \| Q) = \sum_x P(x) \log \frac{P(x)}{Q(x)}$$
+
+**DDPM Loss (simplified)**
+$$\mathcal{L}_{DDPM} = \mathbb{E}_{t, x_0, \epsilon} \left[ \| \epsilon - \epsilon_\theta(x_t, t) \|^2 \right]$$
+
+**DPO Loss**
+$$\mathcal{L}_{DPO} = -\log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right)$$
+
+**IoU Loss**
+$$\mathcal{L}_{IoU} = 1 - \frac{|B_p \cap B_{gt}|}{|B_p \cup B_{gt}|}$$
+
+**ArcFace Loss**
+$$\mathcal{L}_{ArcFace} = -\log \frac{e^{s \cos(\theta_{y_i} + m)}}{e^{s \cos(\theta_{y_i} + m)} + \sum_{j \neq y_i} e^{s \cos \theta_j}}$$
+
+**Wasserstein Distance (WGAN)**
+$$\mathcal{L}_{WGAN} = \mathbb{E}_{x \sim p_{data}}[D(x)] - \mathbb{E}_{z \sim p_z}[D(G(z))]$$
 
 ---
 
@@ -867,6 +980,8 @@ A comprehensive, chronologically ordered collection of loss functions across all
 **Contrastive Domain Discrepancy (CDD)** (2019) — Class-aware alignment maximizing inter-class and minimizing intra-class discrepancy across domains.
 📄 [Contrastive Adaptation Network for Unsupervised Domain Adaptation](https://arxiv.org/abs/1901.00976) — Kang et al.
 
+---
+
 ## Survey Papers
 
 - 📄 [A Comprehensive Survey of Loss Functions and Metrics in Deep Learning](https://arxiv.org/abs/2307.02694) — Terven et al. (2025)
@@ -891,6 +1006,11 @@ A comprehensive, chronologically ordered collection of loss functions across all
 | auraloss | Multi-Resolution STFT, mel losses | [GitHub](https://github.com/csteinmetz1/auraloss) |
 | BasicSR | Perceptual, SSIM, Charbonnier, GAN losses for SR | [GitHub](https://github.com/XPixelGroup/BasicSR) |
 | kornia | Focal, Dice, SSIM, and more | [GitHub](https://github.com/kornia/kornia) |
+| anomalib | Anomaly detection losses and methods | [GitHub](https://github.com/open-edge-platform/anomalib) |
+| Avalanche | Continual learning (EWC, SI, LwF, etc.) | [GitHub](https://github.com/ContinualAI/avalanche) |
+| GluonTS | Time series forecasting losses | [GitHub](https://github.com/awslabs/gluonts) |
+| audiocraft | Audio generation (EnCodec, MusicGen) | [GitHub](https://github.com/facebookresearch/audiocraft) |
+| AIF360 | Fairness and bias mitigation | [GitHub](https://github.com/Trusted-AI/AIF360) |
 
 ---
 
@@ -904,6 +1024,22 @@ When adding a new entry, please follow this format:
 📄 [Paper Title](link) — Authors
 💻 [Implementation](link) (if available)
 ```
+
+### Contribution Ideas
+
+- Add loss functions from emerging fields (e.g., world models, embodied AI, protein folding)
+- Add PyTorch/JAX code snippets for complex losses
+- Improve mathematical formulations section
+- Add benchmark comparisons between related losses
+- Translate descriptions to other languages
+
+---
+
+## Star History
+
+If you find this useful, please star the repo — it helps others discover it.
+
+[![Star History Chart](https://api.star-history.com/svg?repos=stabgan/awesome-loss-functions&type=Date)](https://star-history.com/#stabgan/awesome-loss-functions&Date)
 
 ---
 
