@@ -27,7 +27,7 @@ A comprehensive, chronologically ordered collection of loss functions across all
 
 ---
 
-## Table of Contents
+## Contents
 
 **Core Categories (inline)**
 
@@ -76,7 +76,6 @@ A comprehensive, chronologically ordered collection of loss functions across all
 
 - [Survey Papers](#survey-papers)
 - [Key Implementation Libraries](#key-implementation-libraries)
-- [Contributing](#contributing)
 
 ---
 
@@ -489,7 +488,7 @@ $$
 
 **Consistency Loss** (2023) — Self-consistency along the probability flow ODE for high-quality one-step generation.
 📄 [Consistency Models](https://arxiv.org/abs/2303.01469) — Song et al.
-💻 [openai/consistency_models](https://github.com/openai/consistency_models)
+💻 [OpenAI/consistency_models](https://github.com/openai/consistency_models)
 
 ## Reconstruction & Perceptual
 
@@ -1031,7 +1030,7 @@ $$
 | PyTorch (built-in) | CE, BCE, MSE, Huber, CTC, KLDiv, etc. | [pytorch.org](https://pytorch.org/docs/stable/nn.html#loss-functions) |
 | pytorch-metric-learning | Triplet, Contrastive, ArcFace, ProxyNCA, etc. | [GitHub](https://github.com/KevinMusgrave/pytorch-metric-learning) |
 | SegLossOdyssey | Dice, Tversky, Boundary, Hausdorff, etc. | [GitHub](https://github.com/JunMa11/SegLossOdyssey) |
-| HuggingFace TRL | DPO, PPO, KTO, ORPO, SimPO, etc. | [GitHub](https://github.com/huggingface/trl) |
+| Hugging Face TRL | DPO, PPO, KTO, ORPO, SimPO, etc. | [GitHub](https://github.com/huggingface/trl) |
 | Stable-Baselines3 | DQN, PPO, SAC, TD3, A2C, etc. | [GitHub](https://github.com/DLR-RM/stable-baselines3) |
 | lightly | SimCLR, BYOL, MoCo, DINO, Barlow Twins, etc. | [GitHub](https://github.com/lightly-ai/lightly) |
 | insightface | ArcFace, CosFace, Sub-center ArcFace | [GitHub](https://github.com/deepinsight/insightface) |
@@ -1050,37 +1049,8 @@ $$
 
 ---
 
-## Contributing
-
-Contributions welcome! Please open an issue or submit a PR to add missing loss functions, fix links, or improve descriptions.
-
-When adding a new entry, please follow this format:
-```
-**Name** (Year) — One-line description.
-📄 [Paper Title](link) — Authors
-💻 [Implementation](link) (if available)
-```
-
-### Contribution Ideas
-
-- Add loss functions from emerging fields (e.g., world models, embodied AI, protein folding)
-- Add PyTorch/JAX code snippets for complex losses
-- Improve mathematical formulations section
-- Add benchmark comparisons between related losses
-- Translate descriptions to other languages
-
----
-
 ## Star History
 
 If you find this useful, please star the repo — it helps others discover it.
 
 [![Star History Chart](https://api.star-history.com/svg?repos=stabgan/awesome-loss-functions&type=Date)](https://star-history.com/#stabgan/awesome-loss-functions&Date)
-
----
-
-## License
-
-[![CC0](https://licensebuttons.net/p/zero/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
-
-This list is released into the public domain. The papers and implementations linked are subject to their own licenses.
