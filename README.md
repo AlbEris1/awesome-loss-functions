@@ -115,40 +115,76 @@ Not sure which loss to use? Here's a quick decision framework:
 ## 📐 Key Mathematical Formulations
 
 **Cross-Entropy Loss**
-$$\mathcal{L}_{CE} = -\sum_{c=1}^{C} y_c \log(\hat{y}_c)$$
+
+$$
+\mathcal{L}_{CE} = -\sum_{c=1}^{C} y_c \log(\hat{y}_c)
+$$
 
 **Binary Cross-Entropy**
-$$\mathcal{L}_{BCE} = -[y \log(\hat{y}) + (1-y) \log(1-\hat{y})]$$
+
+$$
+\mathcal{L}_{BCE} = -[y \log(\hat{y}) + (1-y) \log(1-\hat{y})]
+$$
 
 **Focal Loss**
-$$\mathcal{L}_{FL} = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
+
+$$
+\mathcal{L}_{FL} = -\alpha_t (1 - p_t)^\gamma \log(p_t)
+$$
 
 **Dice Loss**
-$$\mathcal{L}_{Dice} = 1 - \frac{2 \sum_i p_i g_i}{\sum_i p_i + \sum_i g_i}$$
+
+$$
+\mathcal{L}_{Dice} = 1 - \frac{2 \sum_i p_i g_i}{\sum_i p_i + \sum_i g_i}
+$$
 
 **Triplet Loss**
-$$\mathcal{L}_{Triplet} = \max(0, \|f_a - f_p\|_2 - \|f_a - f_n\|_2 + \alpha)$$
+
+$$
+\mathcal{L}_{Triplet} = \max(0, \|f_a - f_p\|_2 - \|f_a - f_n\|_2 + \alpha)
+$$
 
 **InfoNCE / Contrastive Loss**
-$$\mathcal{L}_{InfoNCE} = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_{k=1}^{2N} \mathbb{1}_{[k \neq i]} \exp(\text{sim}(z_i, z_k) / \tau)}$$
+
+$$
+\mathcal{L}_{InfoNCE} = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_{k=1}^{2N} \mathbb{1}_{[k \neq i]} \exp(\text{sim}(z_i, z_k) / \tau)}
+$$
 
 **KL Divergence**
-$$D_{KL}(P \| Q) = \sum_x P(x) \log \frac{P(x)}{Q(x)}$$
+
+$$
+D_{KL}(P \| Q) = \sum_x P(x) \log \frac{P(x)}{Q(x)}
+$$
 
 **DDPM Loss (simplified)**
-$$\mathcal{L}_{DDPM} = \mathbb{E}_{t, x_0, \epsilon} \left[ \| \epsilon - \epsilon_\theta(x_t, t) \|^2 \right]$$
+
+$$
+\mathcal{L}_{DDPM} = \mathbb{E}_{t, x_0, \epsilon} \left[ \| \epsilon - \epsilon_\theta(x_t, t) \|^2 \right]
+$$
 
 **DPO Loss**
-$$\mathcal{L}_{DPO} = -\log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right)$$
+
+$$
+\mathcal{L}_{DPO} = -\log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right)
+$$
 
 **IoU Loss**
-$$\mathcal{L}_{IoU} = 1 - \frac{|B_p \cap B_{gt}|}{|B_p \cup B_{gt}|}$$
+
+$$
+\mathcal{L}_{IoU} = 1 - \frac{|B_p \cap B_{gt}|}{|B_p \cup B_{gt}|}
+$$
 
 **ArcFace Loss**
-$$\mathcal{L}_{ArcFace} = -\log \frac{e^{s \cos(\theta_{y_i} + m)}}{e^{s \cos(\theta_{y_i} + m)} + \sum_{j \neq y_i} e^{s \cos \theta_j}}$$
+
+$$
+\mathcal{L}_{ArcFace} = -\log \frac{e^{s \cos(\theta_{y_i} + m)}}{e^{s \cos(\theta_{y_i} + m)} + \sum_{j \neq y_i} e^{s \cos \theta_j}}
+$$
 
 **Wasserstein Distance (WGAN)**
-$$\mathcal{L}_{WGAN} = \mathbb{E}_{x \sim p_{data}}[D(x)] - \mathbb{E}_{z \sim p_z}[D(G(z))]$$
+
+$$
+\mathcal{L}_{WGAN} = \mathbb{E}_{x \sim p_{data}}[D(x)] - \mathbb{E}_{z \sim p_z}[D(G(z))]
+$$
 
 ---
 
